@@ -339,8 +339,8 @@ plt.grid(True)
 plt.show()
 plt.savefig("visualized")
 ```
-![Training Loss Over Time](visualized.png)
-*Figure 1: Example Plot for "King", "man" "queen" "woman"*
+![Words Visualized](plotted_words.png)
+*Figure 2: Example Plot for "King", "man" "queen" "woman"*
 
 
 
