@@ -292,6 +292,26 @@ def word2vec(corpus, embedding_dim=100, epochs=100, learning_rate=0.01):
     return V, U, word2idx, losses
 ```
 
+--- 
+
+### Plotting The loss:
+After getting the loss array from our function you can then plot the loss by using `matplotlib`:
+```python
+print(f"Final loss: {losses[-1]:.4f}")
+print(f"Initial loss: {losses[0]:.4f}")
+
+plt.figure(figsize=(10, 6))
+plt.plot(losses)
+plt.title("Training Loss Over Time")
+plt.xlabel("Epochs")
+plt.ylabel("Average Loss per Epoch")
+window = 100
+smoothed = np.convolve(losses, np.ones(window)/window, mode='valid')
+plt.plot(smoothed)
+plt.savefig("loss_plot")
+```
+
+### 
 
 
 
