@@ -409,3 +409,4 @@ def word_analogy(word_a, word_b, word_c, word2idx, embeddings):
 word_analogy("king", "man", "woman", word2idx, final_embeddings)
 # Output: 'king is to man as woman is to queen'
 ```
+Thank you for following this tutorial!!
