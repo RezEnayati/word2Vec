@@ -1,4 +1,4 @@
-# Word2vec from scratch (Skip-gram with negative sampling)
+# How to build Word2vec from scratch (Skip-gram with negative sampling)
 This project implements [Word2Vec](https://arxiv.org/pdf/1301.3781) from scratch using only NumPy. Here I will try to explain as simply as possible how Word2Vec works.
 
 For a long time, NLP researchers were trying to find ways to represent words as numbers. A simple approach was creating one-hot encodings of words in the dictionary, but the issue with that was the one-hot encodings did not capture the relationship between words. By relationship, I mean words that appear in the same context. For example, "king" and "queen" often appear in similar contexts, but "banana" and "pencil" do not.
@@ -23,20 +23,5 @@ This works because the model has learned consistent vector offsets that represen
 
 This whole project was implemented without any machine learning libraries or frameworks. It’s just raw NumPy and math, and it was a lot of fun to build.
 
-**key features**
-  * Step-by-step Word2vec pipeline
-  * Tokenization, vocabulary building and unigram distribution
-  * Skip-Gram pair generation with adjustable context window
-  * Efficient negative sampling using unigram distrobution
-  * Training loop with Numpy and manual Stochastic Gradient Descent
-  * Visualization of the embeddings in 2D-space using PCA
-  * Loss plot
-  * Cosine similarity
-  * Word analogies
-
-
-## How it works
-  1. Preprocessing:
-     * clean the corpus 
-  3. 
+## High-level Overview 
 
