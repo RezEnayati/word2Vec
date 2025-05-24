@@ -1,3 +1,13 @@
+![Python](https://img.shields.io/badge/Python-3.7%2B-blue?style=flat-square&logo=python&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat-square&logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
+
+![Word2Vec](https://img.shields.io/badge/Word2Vec-From%20Scratch-orange?style=flat-square)
+![Skip-gram](https://img.shields.io/badge/Algorithm-Skip--gram-red?style=flat-square)
+![Negative Sampling](https://img.shields.io/badge/Technique-Negative%20Sampling-purple?style=flat-square)
+![NLP](https://img.shields.io/badge/Domain-NLP-teal?style=flat-square)
+
 # How to Build Word2vec From Scratch 
 ## (Skip-gram with negative sampling)
 This project implements [Word2Vec](https://arxiv.org/pdf/1301.3781) from scratch using only NumPy. Here I will try to explain as simply as possible how Word2Vec works.
@@ -340,20 +350,62 @@ plt.show()
 plt.savefig("visualized")
 ```
 ![Words Visualized](plotted_words.png)
-*Figure 2: Example Plot for "King", "man" "queen" "woman"*
+*Figure 2: Example Plot for "King", "man", "queen", "woman"*
 
+### Word Analogies
+One of the coolest properties of Word2Vec is that the learned word vectors support **vector arithmetic** this means we can solve analogy-like problems using simple math.
+For example, the famous analogy:
 
+> "King is to man as **?** is to woman"
 
+can be written in vector form as:
 
+$$
+\text{vec}("king") - \text{vec}("man") + \text{vec}("woman") \approx \text{vec}("queen")
+$$
 
+So we take the difference between `"king"` and `"man"` to capture the **royalty - gender** relationship, and then apply that offset to `"woman"`. The result is a new vector that should be close to `"queen"` in the embedding space.
 
+We then compute the **cosine similarity** between this resulting vector and all other word embeddings to find the closest match.
+```python
+def cosine_similarity(v1, v2):
+    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
 
+def word_analogy(word_a, word_b, word_c, word2idx, embeddings):
+  # a is to b as c is to?
 
+  for word in [word_a, word_b, word_c]:
+    if word not in word2idx.keys():
+      return f"word {word} not found in vocab"
+  
+  idx_a = word2idx[word_a]
+  idx_b = word2idx[word_b]
+  idx_c = word2idx[word_c]
 
+  vec_a = embeddings[idx_a]
+  vec_b = embeddings[idx_b]
+  vec_c = embeddings[idx_c]
 
+  analogy_vec = vec_b - vec_a + vec_c
 
+  idx2word = {idx: word for word, idx in word2idx.items()}
 
+  similarities = []
 
+  for idx in range(len(embeddings)):
+    if idx in [idx_a, idx_b, idx_c]:
+      continue
+    
+    similarity = cosine_similarity(analogy_vec, embeddings[idx])
+    similarities.append((idx2word[idx], similarity))
 
+  similarities.sort(key =lambda x: x[1], reverse=True)
 
+  return f"{word_a} is to {word_b} as {word_c} is to {similarities[0][0]}"
+```
 
+**Example Usage**
+```python
+word_analogy("king", "man", "woman", word2idx, final_embeddings)
+# Output: 'king is to man as woman is to queen'
+```
