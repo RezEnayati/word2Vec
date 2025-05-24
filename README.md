@@ -1,4 +1,5 @@
-# How to build Word2vec from scratch (Skip-gram with negative sampling)
+# How to Build Word2vec From Scratch 
+##(Skip-gram with negative sampling)
 This project implements [Word2Vec](https://arxiv.org/pdf/1301.3781) from scratch using only NumPy. Here I will try to explain as simply as possible how Word2Vec works.
 
 For a long time, NLP researchers were trying to find ways to represent words as numbers. A simple approach was creating one-hot encodings of words in the dictionary, but the issue with that was the one-hot encodings did not capture the relationship between words. By relationship, I mean words that appear in the same context. For example, "king" and "queen" often appear in similar contexts, but "banana" and "pencil" do not.
