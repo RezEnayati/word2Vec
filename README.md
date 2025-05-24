@@ -310,8 +310,37 @@ smoothed = np.convolve(losses, np.ones(window)/window, mode='valid')
 plt.plot(smoothed)
 plt.savefig("loss_plot")
 ```
+*Example*
+![Training Loss Over Time](loss_plot_main.png)
+*Figure 1: Word2Vec training loss decreasing over epochs*
+ 
+### Visualize Using PCA 
+You can also visualize the learned word embeddings in **2D space** using **Principal Component Analysis (PCA)**. PCA is a technique for **dimensionality reduction** that projects high-dimensional data into a lower-dimensional space while preserving as much variance as possible.
+Since our embeddings typically live in a space with 50 or 100 dimensions, PCA helps us plot them in 2D so we can get an intuitive sense of the structure.
 
-### 
+```python
+from sklearn.decomposition import PCA
+
+U,V, word2idx, losses = word2vec(corpus)
+words_to_plot = ["man", "king", "woman", "queen"]
+indicies = [word2idx[word] for word in words_to_plot]
+vectors_to_plot = np.array([final_embeddings[idx] for idx in indicies])
+pca = PCA(n_components=2)
+reduced = pca.fit_transform(vectors_to_plot)
+
+plt.figure(figsize=(8,6))
+for i,word in enumerate(words_to_plot):
+  x, y = reduced[i]
+  plt.scatter(x,y)
+  plt.text(x + 0.02, y + 0.02, word, fontsize=12)
+
+plt.title("Word Embeddings Visualized with PCA")
+plt.grid(True)
+plt.show()
+plt.savefig("visualized")
+```
+![Training Loss Over Time](visualized.png)
+*Figure 1: Example Plot for "King", "man" "queen" "woman"*
 
 
 
